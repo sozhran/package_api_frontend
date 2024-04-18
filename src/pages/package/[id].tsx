@@ -4,9 +4,9 @@ import { API_URL } from "@/globals";
 import Link from "next/link";
 
 export interface Dependency {
-    Name: string;
-    Version: string;
-    Needs_Link: string;
+    name: string;
+    version: string;
+    link: string;
 }
 
 export default function PackagePage() {
@@ -42,36 +42,30 @@ export default function PackagePage() {
                 data.map((elm, index) => (
                     <div key={index}>
                         <li>
-                            <b>Name:</b> {elm.Package}
+                            <b>Name:</b> {elm.package}
                         </li>
                         <li>
-                            <b>Dependencies:\n</b>
-                            {elm.Depends
-                                ? elm.Depends.map((dep: Dependency) => {
-                                      {
-                                          dep.Needs_Link ? (
-                                              <p>
-                                                  <Link href={`/package/${dep.Name}`}>{dep.Name}</Link>
-                                              </p>
-                                          ) : (
-                                              <p>{dep.Name}</p>
-                                          );
-                                      }
-                                  })
+                            <b>Dependencies:</b>
+                            {elm.depends
+                                ? elm.depends.map((dep: Dependency, index: number) => (
+                                      <p key={index}>
+                                          {dep.link ? <Link href={dep.link}>{dep.name}</Link> : <p>{dep.name}</p>}
+                                      </p>
+                                  ))
                                 : "None"}
                         </li>
                         <li>
-                            <b>Reverse dependencies:\n</b>{" "}
-                            {elm.Reverse ? (
-                                <p>
-                                    <Link href={`/package/${elm.Reverse}`}>{elm.Reverse}</Link>
-                                </p>
-                            ) : (
-                                "None"
-                            )}
+                            <b>Reverse dependencies:</b>{" "}
+                            {elm.reverse
+                                ? elm.reverse.map((x: string, index: number) => (
+                                      <p key={index}>
+                                          <Link href={`/package/${x}`}>{x}</Link>
+                                      </p>
+                                  ))
+                                : "None"}
                         </li>
                         <li>
-                            <b>Description:</b> {elm.Description}
+                            <b>Description:</b> {elm.description}
                         </li>
                         <br />
                         <Link href="/">

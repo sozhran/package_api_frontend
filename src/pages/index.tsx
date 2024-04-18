@@ -2,7 +2,7 @@ import { API_URL } from "@/globals";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
-// Simple FE done in React because I can do it faster right now. No styling.
+// Simple FE done in React because I can do it faster right now. No styling. No careful typing.
 
 export default function Home() {
     const [data, setData] = useState<[] | null>(null);
@@ -31,7 +31,7 @@ export default function Home() {
         <div>
             <h1>Welcome to the Package API</h1>
             {data ? (
-                data.map((elm: any, index) => (
+                data.map((elm, index) => (
                     <div key={index}>
                         <Link href={`/package/${elm}`}>{elm}</Link>
                     </div>
